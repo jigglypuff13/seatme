@@ -39,10 +39,15 @@ module.exports = {
     static: {
       directory: path.join(__dirname, './dist'),
     },
-    proxy: {
-      '/api': 'http://localhost:3000',
-      secure: false
+    port: 3000,
+    open: true,
+    hot: true,
+    proxy: [
+      {
+      context: ['/'],
+      target: 'http://localhost:3000',
     }
+  ]
   },
 
 }
