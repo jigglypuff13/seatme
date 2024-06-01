@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import {Students, SeatProps} from '../types'
+import StudentInput from './components/StudentInput'
+
+
+const handleAddSudent = (name:string) => {
+  console.log('student added!!');
+}
+
 
 const App = () => {
-    return (
+
+const [students, setStudents] = useState<Students>([]);
+
+
+  return (
       <div>
         <h1>SEATME</h1>
+        <StudentInput students={students} />
       </div>
     );
   }

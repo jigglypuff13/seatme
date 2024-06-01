@@ -5,3 +5,10 @@ export type SeatProps = {
     y: number
 }
 
+export type Student = {
+    id: number,
+    name: string,
+    rules: any
+}
+
+export type Students = Student[]
