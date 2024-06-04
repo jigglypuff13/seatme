@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import {Students, SeatProps} from '../types'
+import {Students, Rule, Rules, SeatProps} from '../types'
 import StudentInput from './components/StudentInput'
 
 
@@ -12,7 +12,11 @@ const handleAddSudent = (name:string) => {
 const App = () => {
 
 const [students, setStudents] = useState<Students>([]);
-const [rules, setRules] = useState([])
+const [rules, setRules] = useState<Rules>([
+  {
+    'must sit at front': []
+  }
+])
 
 
 
