@@ -60,7 +60,7 @@ const seatLayout = ({rules, students}: seatLayoutProps): JSX.Element => {
     );
   });
   return (
-    <div>
+    <div id="GridLayout">
       {finalGrid}
     </div>
   )

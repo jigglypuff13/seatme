@@ -1,0 +1,4 @@
+#GridLayout {
+  display: grid;
+  grid: repeat(5, auto)
+}
