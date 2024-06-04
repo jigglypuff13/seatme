@@ -4,27 +4,28 @@ import {Students, Rule, Rules, SeatProps} from '../types'
 import StudentInput from './components/StudentInput'
 
 
-const handleAddSudent = (name:string) => {
-  console.log('student added!!');
-}
-
-
 const App = () => {
 
+const [studentCandidate, setStudentCandidate] = useState('');
 const [students, setStudents] = useState<Students>([]);
 const [rules, setRules] = useState<Rules>([
   {
-    'must sit at front': []
+    'must sit front': []
   }
-])
-
+]);
 
 
 
   return (
       <div>
         <h1>SEATME</h1>
-        <StudentInput students={students} handleAddStudent={handleAddSudent} />
+        <StudentInput 
+          studentCandidate={studentCandidate}
+          setStudentCandidate={setStudentCandidate}
+          students={students} 
+          setStudents={setStudents}
+          rules={rules}
+        />
       </div>
     );
   }

@@ -7,8 +7,7 @@ export type SeatProps = {
 
 export type Student = {
     id: number,
-    name: string,
-    rules: any
+    name: string
 }
 
 // individual rule object = name of student
