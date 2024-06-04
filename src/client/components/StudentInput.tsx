@@ -34,8 +34,8 @@ const StudentInput: React.FC<StudentInputProps> = ({
     const studentNames = ['Ben', 'Daniel', 'Darren', 'Myles', 'Garret'];
     const studentLIs = [];
 
-    for(let i = 0; i < studentNames.length; i++) {
-        studentLIs.push(<li>{studentNames[i]}</li>)
+    for(let i = 0; i < students.length; i++) {
+        studentLIs.push(<li>{students[i].name}</li>)
     }
 
 
