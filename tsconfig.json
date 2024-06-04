@@ -14,7 +14,7 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "commonjs",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "types": ["node", "jest", "@testing-library/react", "@testing-library/jest-dom"]
