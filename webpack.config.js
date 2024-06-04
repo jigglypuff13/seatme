@@ -44,10 +44,10 @@ module.exports = {
     hot: true,
     proxy: [
       {
-      context: ['/'],
-      target: 'http://localhost:3000',
-    }
-  ]
+        context: ['/'],
+        target: 'http://localhost:3000',
+      }
+    ]
   },
 
 }
