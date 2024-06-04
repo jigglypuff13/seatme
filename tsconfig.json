@@ -17,7 +17,8 @@
     "jsx": "react-jsx",
     "moduleResolution": "node",
     "noImplicitAny": true,
-    "types": ["node", "jest", "@testing-library/react", "@testing-library/jest-dom"]
+    "types": ["node", "jest", "@testing-library/react", "@testing-library/jest-dom"],
+    "esModuleInterop": true
   },
   "include": ["src/**/*"]
 }
