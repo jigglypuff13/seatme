@@ -11,4 +11,22 @@ export type Student = {
     rules: any
 }
 
+// individual rule object = name of student
+// key number = primary key 
+// key: string = rule type
+export type Rule = {
+    [key:string]: string[]
+}
+
+/*
+{
+    'rule' : [
+        'bobby', 'darren'
+    ]
+}
+*/
+
+// array of rule objects
+export type Rules = Rule[]
+
 export type Students = Student[]

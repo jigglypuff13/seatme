@@ -5,7 +5,7 @@ import {Students} from '../../types'
 
 interface StudentInputProps extends React.HTMLAttributes<HTMLElement> {
     students: Students;
-    // handleAddStudent:(name:string) => void;
+    handleAddStudent:(name:string) => void;
   }
   
 

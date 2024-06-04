@@ -12,12 +12,15 @@ const handleAddSudent = (name:string) => {
 const App = () => {
 
 const [students, setStudents] = useState<Students>([]);
+const [rules, setRules] = useState([])
+
+
 
 
   return (
       <div>
         <h1>SEATME</h1>
-        <StudentInput students={students} />
+        <StudentInput students={students} handleAddStudent={handleAddSudent} />
       </div>
     );
   }
