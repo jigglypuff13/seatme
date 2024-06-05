@@ -42,8 +42,7 @@ const StudentInput: React.FC<StudentInputProps> = ({
     return (
         <div>
             <h3>Student names:</h3>
-            <form 
-                >
+            <form>
                 <input 
                     className='student-input'
                     type="text"
