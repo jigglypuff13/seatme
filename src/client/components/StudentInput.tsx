@@ -20,6 +20,10 @@ const handleStudentCandidateChange = (
   setStudentCandidate(e.target.value);
 }
 
+const handleDeleteStudent = (e:React.MouseEvent<HTMLButtonElement>) => {
+    console.log(e);
+}
+
 
 // the functional component
 const StudentInput: React.FC<StudentInputProps> = ({ 
@@ -31,11 +35,17 @@ const StudentInput: React.FC<StudentInputProps> = ({
 }) => {
 
     // hard coded 
-    const studentNames = ['Ben', 'Daniel', 'Darren', 'Myles', 'Garret'];
+    // const studentNames = ['Ben', 'Daniel', 'Darren', 'Myles', 'Garret'];
     const studentLIs = [];
 
     for(let i = 0; i < students.length; i++) {
-        studentLIs.push(<li>{students[i].name}</li>)
+        studentLIs.push(<li>
+                            {students[i].name}
+                            <button 
+                                className="delete-student"
+                                onClick={(e) => {handleDeleteStudent(e)}}>
+                            Delete</button>
+                        </li>)
     }
 
 
