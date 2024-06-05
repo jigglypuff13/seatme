@@ -5,8 +5,6 @@
     "jsx": "react",
     "moduleResolution": "NodeNext",
     "noImplicitAny": true,
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
   },
   "include": [
     "src/**/*"
