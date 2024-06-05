@@ -11,7 +11,7 @@ interface CustomResponse extends Response {
   }
 
 interface ParamsDictionary {
-    username: string;
+    email: string;
 }
 
 export type SeatProps = {

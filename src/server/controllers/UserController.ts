@@ -2,52 +2,52 @@ import { User } from ;
 import { MiddlewareTypes } from '../../types';
 
 
-const userController : { [key: string]: (uc:MiddlewareTypes)=> void } = {};
+const userController : { [key: string]: (uc:MiddlewareTypes)=> Promise<void> } = {};
 
-userController.createUser = (uc: MiddlewareTypes) => {
-  const { username, password, name } : { username: string; password: string; name: string}= uc.req.body;
+userController.createUser = async (uc: MiddlewareTypes): Promise<void> => {
+  const { email, password } : { email: string; password: string}= uc.req.body;
 
-  if (!username || !name || !password) {
-    return uc.res.status(400).json({ error: 'Missing field.' });
+  if (!email || !password) {
+    uc.res.status(400).json({ error: 'Missing field.' });
   }
 
-  User.create({
-    username,
-    password,
-    name,
-  })
-    .then((data: User) => {
-      uc.res.locals.user = data;
-      uc.res.locals.userID = data._id.toString();
-      return uc.next();
+  try { 
+    const user = User.create({
+      email,
+      password,
     })
-    .catch((err:any) => {
+    const data = await user.save();
+    uc.res.locals.user = data;
+    uc.res.locals.userID = data._id.toString();
+    return uc.next();
+    }
+    catch(err:any) {
       return uc.next({
         log: 'User Signup Error',
         status: 400,
         message: { err: 'User Signup Error' },
       });
-    });
+    };
 };
 
-userController.checkUser = (uc:MiddlewareTypes) => {
-    const { username } : { username: string} = uc.req.params;
-    User.findOne({ username })
-    .then((data: User | null) => {
+userController.checkUser = async(uc:MiddlewareTypes) => {
+    const { email } : { email: string} = uc.req.params;
+    try {
+      const data = await User.findOne({ where: { email } })
       if (data === null) {
         uc.res.locals.userAvailability = true;
       } else {
         uc.res.locals.userAvailability = false;
       }
       return uc.next();
-    })
-    .catch((err: any) => {
+    }
+    catch(err: any) {
         uc.next({
           log: 'User Check Error',
           status: 400,
           message: { err: 'User Check Error' },
         });
-    })
+    }
   };
 
 export default userController;
