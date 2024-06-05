@@ -2,3 +2,7 @@
   display: grid;
   grid: repeat(5, auto)
 }
+
+.studentBox {
+  border-style: solid;
+}

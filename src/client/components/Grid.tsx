@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Students, Rules, Student } from "../../types";
 
 // Shape of incoming data: 
@@ -18,6 +18,8 @@ interface seatLayoutProps {
 };
 
 const seatLayout = ({rules, students}: seatLayoutProps): JSX.Element => {
+  const [grid, setGrid] = useState<JSX.Element[]>()
+
   const shallowStudents: Student[] = [...students];
   const seatingGrid: string[] = new Array(students.length);
   // Simple randomizer algo
@@ -26,12 +28,7 @@ const seatLayout = ({rules, students}: seatLayoutProps): JSX.Element => {
     if (!seatingGrid[seat]) return seat;
     else seatRandomizer(seats);
   };
-  (function (students: Students, rules: Rules): void {
-    // Build student seating cache
-    // const seating: {[key: number]: string} = {}
-    // for (let i:number = 0; i < 25; i++){
-    //   seating[i] = '';
-    // }
+  const gridGenerator = (students: Students, rules: Rules): void => {
     if (rules) {
       // Iterate through rules object
       for (const rule in rules) {
@@ -52,24 +49,30 @@ const seatLayout = ({rules, students}: seatLayoutProps): JSX.Element => {
       const seat: number = seatRandomizer(students.length);
       seatingGrid[seat] = shallowStudents.pop().name;
     };
-  })(shallowStudents, rules);
-  const finalGrid: JSX.Element[] = seatingGrid.map((name: string) => {
-    return (
-      <div>
+    // Generate array of React elements
+    const finalGrid: JSX.Element[] = seatingGrid.map((name: string) => {
+      return (
+        <div className="studentBox">
         <p>{name}</p>
       </div>
     );
   });
+  // Save to state
+  setGrid(finalGrid);
+};
   return (
     <div>
-    { finalGrid
-      ? <div id="GridLayout"> 
-        {finalGrid} 
+      { grid
+        ? <div id="GridLayout"> 
+          {grid} 
+        </div>
+        : <div>
+          <p>Generate a layout first!</p>
+        </div>
+      }
+      <div>
+      <button onClick={() => gridGenerator(students, rules)}>Click to Generate Layout</button>
       </div>
-      : <div>
-        <p>Generate a layout!</p>
-      </div>
-    }
     </div>
   )
 }
