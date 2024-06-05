@@ -20,6 +20,7 @@ interface seatLayoutProps {
 const seatLayout = ({rules, students}: seatLayoutProps): JSX.Element => {
   const shallowStudents: Student[] = [...students];
   const seatingGrid: string[] = new Array(students.length);
+  // Simple randomizer algo
   const seatRandomizer = (seats: number): number => {
     const seat: number = (Math.floor(Math.random() * seats));
     if (!seatingGrid[seat]) return seat;
@@ -48,7 +49,7 @@ const seatLayout = ({rules, students}: seatLayoutProps): JSX.Element => {
     };
     // Iterate through remaining students, assign to seating array
     while(shallowStudents.length) {
-      const seat: number = seatRandomizer(25);
+      const seat: number = seatRandomizer(students.length);
       seatingGrid[seat] = shallowStudents.pop().name;
     };
   })(shallowStudents, rules);
@@ -60,8 +61,15 @@ const seatLayout = ({rules, students}: seatLayoutProps): JSX.Element => {
     );
   });
   return (
-    <div id="GridLayout">
-      {finalGrid}
+    <div>
+    { finalGrid
+      ? <div id="GridLayout"> 
+        {finalGrid} 
+      </div>
+      : <div>
+        <p>Generate a layout!</p>
+      </div>
+    }
     </div>
   )
 }
