@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 // const path = require('path');
 import path from 'path';
-import connectDB from './database.ts';
+import connectDB from './database';
 
 const app = express();
 
