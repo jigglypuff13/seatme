@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import {Students, Rules, SeatProps} from '../types'
 import StudentInput from './components/StudentInput'
 import Grid from './components/Grid';
+import Login from './components/Login';
 
 
 const App = () => {
@@ -19,6 +20,7 @@ const [rules, setRules] = useState<Rules>({
   return (
       <div>
         <h1>SEATME</h1>
+        <Login />
         <StudentInput 
           studentCandidate={studentCandidate}
           setStudentCandidate={setStudentCandidate}
