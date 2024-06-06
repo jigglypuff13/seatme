@@ -24,4 +24,35 @@ sessionController.isLoggedIn = async (sc: MiddlewareTypes): Promise<void> => {
     };
 };
 
+sessionController.startSession = async (sc: MiddlewareTypes): Promise<void> => {
+    let client
+    const userID = sc.res.locals.userID
+    try {
+        client = await pool.connect()
+        const sessionQuery = 'SELECT * FROM sessions WHERE cookieID = $1',
+        const sessionResult = await client.query(sessionQuery, [userID])
+        if (!sessionResult) {
+            const insertQuery = 'INSERT INTO sessions (cookieId) VALUES ($1) RETURNING *';
+            const insertResult = await client.query(insertQuery, [userID])
+            console.log('New session created : ', insertResult.rows[0])
+        }
+        else {
+            console.log('Existing session found, continuing logging in')
+        }
+        sc.next();
+    }
+    catch (err: any){
+        sc.next({
+            log: 'Error in starting session',
+            status: 500,
+            message: { err: 'Error when finding or creating session'}
+        })
+    }
+    finally {
+        if (client) {
+            client.release()
+        }
+    }
+}
+
 export default sessionController
