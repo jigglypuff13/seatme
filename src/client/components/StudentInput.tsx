@@ -20,6 +20,24 @@ const handleStudentCandidateChange = (
   setStudentCandidate(e.target.value);
 }
 
+const handleDeleteStudent = (
+        e:React.MouseEvent<HTMLLIElement>,
+        setStudents:React.Dispatch<React.SetStateAction<Students>>,
+        students:Students
+    ) => {
+    // console.log(e);
+    const studentName:string = e.currentTarget.textContent.replace('delete', '');
+    console.log('text content', studentName);
+    const newStudents = [...students]
+    for(let i = 0; i < newStudents.length; i++) {
+        if(newStudents[i].name === studentName) {
+            newStudents.splice(i, 1);
+            setStudents(newStudents);
+            break;
+        }
+    }
+}
+
 
 // the functional component
 const StudentInput: React.FC<StudentInputProps> = ({ 
@@ -27,15 +45,22 @@ const StudentInput: React.FC<StudentInputProps> = ({
     setStudentCandidate,
     students, 
     setStudents,
-    rules, 
+    rules
 }) => {
 
     // hard coded 
-    const studentNames = ['Ben', 'Daniel', 'Darren', 'Myles', 'Garret'];
+    // const studentNames = ['Ben', 'Daniel', 'Darren', 'Myles', 'Garret'];
     const studentLIs = [];
 
     for(let i = 0; i < students.length; i++) {
-        studentLIs.push(<li>{students[i].name}</li>)
+        studentLIs.push(<li
+                            className="student-li"
+                            onClick={(e) => {
+                                handleDeleteStudent(e, setStudents, students)
+                                }}>
+                        {students[i].name}
+                        <span className="delete-student-text">delete</span>
+                        </li>)
     }
 
 
