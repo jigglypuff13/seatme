@@ -1,32 +1,17 @@
-import express, { Request, Response, NextFunction } from 'express';
-
+import express, { Request, Response } from 'express';
 import request from 'supertest';
+import path from 'path';
+
 const app = express();
 
-// The middleware function you want to test
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  const defaultErr = {
-    log: 'Unknown middleware error'
-  };
-  // Add any additional logic or error handling here
-});
+// Route to serve index.html
+app.use('/', (req: Request, res: Response) => res.sendFile(path.join(__dirname, '../client/index.html')));
 
-describe('Middleware', () => {
-  it('should handle unknown errors', async () => {
-    // Create a mock error
-    const mockError = new Error('Mock error');
+describe('Root route', () => {
+  it('should serve index.html file with the title SEATME', async () => {
+    const response = await request(app).get('/');
 
-    // Mock the next function to capture the error
-    const nextMock = jest.fn();
-
-    // Call the middleware with the mock error, request, response, and next function
-    await app.use(
-      (err: Error, req: Request, res: Response, next: NextFunction) => {
-        next(mockError);
-      }
-    );
-
-    // Check if the next function was called with the expected error
-    expect(nextMock).toHaveBeenCalledWith(mockError);
+    expect(response.status).toBe(200);
+    expect(response.text).toContain('<title>SeatMe</title>');
   });
 });
