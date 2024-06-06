@@ -13,12 +13,12 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "module": "commonjs",
-    "jsx": "react-jsx",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "jsx": "react",
+    "moduleResolution": "NodeNext",
     "noImplicitAny": true,
-    "types": ["node", "jest", "@testing-library/react", "@testing-library/jest-dom"],
-    "esModuleInterop": true
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*"
+  ]
 }
