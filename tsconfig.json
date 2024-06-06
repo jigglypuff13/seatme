@@ -13,9 +13,11 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "module": "NodeNext",
+    "module": "commonjs",
     "jsx": "react",
-    "moduleResolution": "NodeNext",
+    // "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "typeRoots": ["node_modules/@types"],
     "noImplicitAny": true,
   },
   "include": [
