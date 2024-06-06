@@ -32,6 +32,8 @@ const handleDeleteStudent = (
     for(let i = 0; i < newStudents.length; i++) {
         if(newStudents[i].name === studentName) {
             newStudents.splice(i, 1);
+            console.log(newStudents);
+            setStudents(newStudents);
             break;
         }
     }
