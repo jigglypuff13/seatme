@@ -1,10 +1,12 @@
 {
-    "compilerOptions": {
-        "target": "ES6",
-        "module": "NodeNext",
-        "jsx": "react",
-        "moduleResolution": "NodeNext",
-        "noImplicitAny": true
-    },
-    "include": ["src/**/*"]
-  }
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "NodeNext",
+    "jsx": "react",
+    "moduleResolution": "NodeNext",
+    "noImplicitAny": true,
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
