@@ -25,3 +25,12 @@ h1 {
 
 
 
+#GridLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.studentBox {
+  margin: 1em;
+  border-style: solid;
+}
