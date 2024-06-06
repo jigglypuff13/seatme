@@ -1,8 +1,9 @@
 #GridLayout {
   display: grid;
-  grid: repeat(5, auto)
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 .studentBox {
+  margin: 1em;
   border-style: solid;
 }

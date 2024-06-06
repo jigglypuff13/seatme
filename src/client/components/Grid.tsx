@@ -17,7 +17,7 @@ interface seatLayoutProps {
   students: Students
 };
 
-const seatLayout = ({rules, students}: seatLayoutProps): JSX.Element => {
+const Grid = ({rules, students}: seatLayoutProps): JSX.Element => {
   const [grid, setGrid] = useState<JSX.Element[]>()
 
   const shallowStudents: Student[] = [...students];
@@ -25,8 +25,8 @@ const seatLayout = ({rules, students}: seatLayoutProps): JSX.Element => {
   // Simple randomizer algo
   const seatRandomizer = (seats: number): number => {
     const seat: number = (Math.floor(Math.random() * seats));
-    if (!seatingGrid[seat]) return seat;
-    else seatRandomizer(seats);
+    if (typeof seatingGrid[seat] != 'string') return seat;
+    else return seatRandomizer(seats);
   };
   const gridGenerator = (students: Students, rules: Rules): void => {
     if (rules) {
@@ -46,19 +46,19 @@ const seatLayout = ({rules, students}: seatLayoutProps): JSX.Element => {
     };
     // Iterate through remaining students, assign to seating array
     while(shallowStudents.length) {
+      const studentName: string = shallowStudents.pop().name;
       const seat: number = seatRandomizer(students.length);
-      seatingGrid[seat] = shallowStudents.pop().name;
+      seatingGrid[seat] = studentName;
     };
     // Generate array of React elements
     const finalGrid: JSX.Element[] = seatingGrid.map((name: string) => {
       return (
-        <div className="studentBox">
-        <p>{name}</p>
-      </div>
+        <p className="studentBox">{name}</p>
     );
   });
   // Save to state
   setGrid(finalGrid);
+  console.log('Grid => ', seatingGrid)
 };
   return (
     <div>
@@ -76,3 +76,5 @@ const seatLayout = ({rules, students}: seatLayoutProps): JSX.Element => {
     </div>
   )
 }
+
+export default Grid;
