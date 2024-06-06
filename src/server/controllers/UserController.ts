@@ -12,17 +12,16 @@ userController.createUser = async (uc: MiddlewareTypes): Promise<void> => {
   }
 
   try { 
-    const user = User.create({
-      email,
-      password,
-    })
-    const data = await user.save();
-    uc.res.locals.user = data;
-    uc.res.locals.userID = data._id.toString();
-    return uc.next();
+    const client = await Pool.connect();
+    const queryText = 'INSERT INTO users (email, password) VALUES ($1, $2)';
+    const queryValues = [email, password];
+    const newUser = await client.query(queryText, queryValues)
+    uc.res.locals.user = newUser;
+    uc.res.locals.userID = newUser.id.toString();
+    uc.next();
     }
-    catch(err:any) {
-      return uc.next({
+    catch(err) {
+      uc.next({
         log: 'User Signup Error',
         status: 400,
         message: { err: 'User Signup Error' },
@@ -33,15 +32,18 @@ userController.createUser = async (uc: MiddlewareTypes): Promise<void> => {
 userController.checkUser = async(uc:MiddlewareTypes) => {
     const { email } : { email: string} = uc.req.params;
     try {
-      const data = await User.findOne({ where: { email } })
-      if (data === null) {
+      const client = await Pool.connect();
+      const queryText = 'SELECT COUNT (*) FROM users WHERE email = $1'
+      const queryValues = [email]
+      const result = await client.query(queryText, queryValues)
+      if (result === null) {
         uc.res.locals.userAvailability = true;
       } else {
         uc.res.locals.userAvailability = false;
       }
-      return uc.next();
+      uc.next();
     }
-    catch(err: any) {
+    catch(err) {
         uc.next({
           log: 'User Check Error',
           status: 400,

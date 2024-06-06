@@ -5,8 +5,12 @@ import { User } from ;
 const sessionController : { [key: string]: (sc:MiddlewareTypes)=> Promise<void> } = {};
 
 sessionController.isLoggedIn = async (sc: MiddlewareTypes): Promise<void> => {
+    let client
+    const sessionID = sc.req.cookies.ssid
     try {
-        const session = await Session.findOne({ where: { cookieId: sc.req.cookies.ssid } })
+        client = await pool.connect()
+        const sessionQuery = 'SELECT * FROM sessions WHERE cookieId = $1 LIMIT 1'
+        const sessionResult = await client.query(sessionQuery, [sessionID])
         if (session === null) {
             sc.res.status(401).json(false);
         } else {
