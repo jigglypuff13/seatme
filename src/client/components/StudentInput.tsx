@@ -20,8 +20,21 @@ const handleStudentCandidateChange = (
   setStudentCandidate(e.target.value);
 }
 
-const handleDeleteStudent = (e:React.MouseEvent<HTMLButtonElement>) => {
-    console.log(e);
+const handleDeleteStudent = (
+        e:React.MouseEvent<HTMLLIElement>,
+        setStudents:React.Dispatch<React.SetStateAction<Students>>,
+        students:Students
+    ) => {
+    // console.log(e);
+    const studentName:string = e.currentTarget.textContent.replace('delete', '');
+    console.log('text content', studentName);
+    const newStudents = [...students]
+    for(let i = 0; i < newStudents.length; i++) {
+        if(newStudents[i].name === studentName) {
+            newStudents.splice(i, 1);
+            break;
+        }
+    }
 }
 
 
@@ -31,7 +44,7 @@ const StudentInput: React.FC<StudentInputProps> = ({
     setStudentCandidate,
     students, 
     setStudents,
-    rules, 
+    rules
 }) => {
 
     // hard coded 
@@ -39,12 +52,13 @@ const StudentInput: React.FC<StudentInputProps> = ({
     const studentLIs = [];
 
     for(let i = 0; i < students.length; i++) {
-        studentLIs.push(<li>
-                            {students[i].name}
-                            <button 
-                                className="delete-student"
-                                onClick={(e) => {handleDeleteStudent(e)}}>
-                            Delete</button>
+        studentLIs.push(<li
+                            className="student-li"
+                            onClick={(e) => {
+                                handleDeleteStudent(e, setStudents, students)
+                                }}>
+                        {students[i].name}
+                        <span className="delete-student-text">delete</span>
                         </li>)
     }
 
