@@ -1,11 +1,17 @@
 import express, { Request, Response, NextFunction } from 'express';
 // const path = require('path');
 import path from 'path';
+import { MiddlewareTypes } from '../types';
+import userController from './controllers/UserController';
 
 const app = express();
 
 
 app.use('/', (req: Request, res: Response) => res.sendFile(path.join(__dirname, '../client/index.html')))
+
+app.post('/signup', userController.createUser, (req: Request, res: Response) =>{
+  res.status(200).json(true);
+})
 
 
 // CURRENTLY NOT WORKING

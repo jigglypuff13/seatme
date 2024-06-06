@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express'
-import { User } from ;
+// import { User } from ;
 
 interface CustomResponse extends Response {
     locals: {
-      user?: User;
+    //   user?: User;
       userID?: string;
       userAvailability?: boolean
     };
@@ -12,6 +12,7 @@ interface CustomResponse extends Response {
 
 interface ParamsDictionary {
     email: string;
+    password: string;
 }
 
 export type SeatProps = {
