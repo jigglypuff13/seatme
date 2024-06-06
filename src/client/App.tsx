@@ -19,17 +19,19 @@ const [rules, setRules] = useState<Rules>({
   return (
       <div>
         <h1>SEATME</h1>
-        <StudentInput 
-          studentCandidate={studentCandidate}
-          setStudentCandidate={setStudentCandidate}
-          students={students} 
-          setStudents={setStudents}
-          rules={rules}
-        />
-        <Grid 
-          rules={rules}
-          students={students}
-        />
+        <div id='appGrid'>
+          <Grid 
+            rules={rules}
+            students={students}
+            />
+          <StudentInput 
+            studentCandidate={studentCandidate}
+            setStudentCandidate={setStudentCandidate}
+            students={students} 
+            setStudents={setStudents}
+            rules={rules}
+            />
+          </div>
       </div>
     );
   }

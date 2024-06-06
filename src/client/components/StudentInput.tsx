@@ -65,11 +65,11 @@ const StudentInput: React.FC<StudentInputProps> = ({
 
 
     return (
-        <div>
-            <h3>Student names:</h3>
-            <form>
+        <div className='borderBox'>
+            <h3 className='centerText'>Student names:</h3>
+            <form className='centerElement'>
                 <input 
-                    className='student-input'
+                    className='student-input centerElement'
                     type="text"
                     value={studentCandidate}
                     onChange={(e) => {handleStudentCandidateChange(e, setStudentCandidate)}}
@@ -77,6 +77,7 @@ const StudentInput: React.FC<StudentInputProps> = ({
                 <br/>
                 <br/>
                 <button 
+                    className='centerElement'
                     type='submit'
                     onClick={(e)=>{
                         e.preventDefault();
