@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
 
-interface LoginInputProps extends React.HTMLAttributes<HTMLElement> {
+interface LoginProps extends React.HTMLAttributes<HTMLElement> {
     
 }
 
 const Login = () => {
     return (
         <div className='login-container'>
-            <h1>this is login container</h1>
+            <form className='login-form'>
+                <label>E-mail:</label>
+                <input 
+                    className='email-input' 
+                    type="text"
+                    value={''}
+                />
+                <label>Password:</label>
+                <input 
+                    type='password'
+                    className='password-input'
+                    value={''}
+                />
+            </form>
         </div>
     )
 }
