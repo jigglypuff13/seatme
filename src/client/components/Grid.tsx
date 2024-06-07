@@ -22,12 +22,14 @@ const Grid = ({rules, students}: seatLayoutProps): JSX.Element => {
 
   const shallowStudents: Student[] = [...students];
   const seatingGrid: string[] = new Array(students.length);
+
   // Simple randomizer algo
   const seatRandomizer = (seats: number): number => {
     const seat: number = (Math.floor(Math.random() * seats));
-    if (typeof seatingGrid[seat] != 'string') return seat;
+    if (typeof seatingGrid[seat] !== 'string') return seat;
     else return seatRandomizer(seats);
   };
+
   const gridGenerator = (students: Students, rules: Rules): void => {
     if (rules) {
       // Iterate through rules object
@@ -60,18 +62,38 @@ const Grid = ({rules, students}: seatLayoutProps): JSX.Element => {
   setGrid(finalGrid);
   console.log('Grid => ', seatingGrid)
 };
+
+const saveGrid = async (students: Students, rules: Rules, grid: JSX.Element[]): Promise<void> => {
+
+  try {
+    const response = await fetch("/saveData", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify([students, rules, grid]),
+    });
+
+    const result = await response.json();
+    alert("Success!");
+  } catch (error) {
+    alert("Error saving information");
+  }
+}
+
   return (
     <div>
       { grid
         ? <div id="GridLayout"> 
           {grid} 
         </div>
-        : <div>
+        : <div className="centerElement">
           <p>Generate a layout first!</p>
         </div>
       }
-      <div>
+      <div className="centerElement">
       <button onClick={() => gridGenerator(students, rules)}>Click to Generate Layout</button>
+      <button onClick={() => saveGrid(students, rules, grid)}>Button to save in SQL</button>
       </div>
     </div>
   )
