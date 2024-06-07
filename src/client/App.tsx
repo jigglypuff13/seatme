@@ -16,17 +16,10 @@ const [rules, setRules] = useState<Rules>({
   }
 );
 
-
-
   return (
       <div>
         <h1>SEATME</h1>
-        <Login
-          // email={email}
-          // setEmail={setEmail}
-          // password={password}
-          // setPassword={setPassword}
-        />
+        <Login/>
         <StudentInput 
           studentCandidate={studentCandidate}
           setStudentCandidate={setStudentCandidate}

@@ -1,16 +1,6 @@
 import React, { useState } from 'react';
 import { LoginOrSignupPath } from '../../types';
 
-// interface LoginProps extends React.HTMLAttributes<HTMLElement> {
-//     email: string,
-//     setEmail: React.Dispatch<React.SetStateAction<String>>,
-//     password: string 
-//     setPassword: React.Dispatch<React.SetStateAction<String>>,
-// }
-
-
-
-
 const handleLoginOrSignup = (
     path:LoginOrSignupPath, 
     email:string,
