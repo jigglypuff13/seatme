@@ -10,7 +10,7 @@ const pool = new Pool({
 });
 
 export default {
-  query: (text: string, params: never, callback: (err: Error, result: QueryResult<any>) => Promise<void>) => {
+  query: (text: string, params: string[], callback: (err: Error, result: QueryResult<any>) => void) => {
     return pool.query(text, params, callback);
   },
   end: () => pool.end()

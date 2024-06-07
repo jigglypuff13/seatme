@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 // const path = require('path');
 import path from 'path';
-import { MiddlewareTypes } from '../types';
 import userController from './controllers/UserController';
 import bodyParser from 'body-parser';
 
