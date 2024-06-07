@@ -3,15 +3,18 @@ import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import { MiddlewareTypes } from '../types';
 import userController from './controllers/UserController';
+import bodyParser from 'body-parser';
 
 const app = express();
 
-
-app.use('/', (req: Request, res: Response) => res.sendFile(path.join(__dirname, '../client/index.html')))
+app.use(bodyParser.json())
 
 app.post('/signup', userController.createUser, (req: Request, res: Response) =>{
   res.status(200).json(true);
 })
+
+app.use('/', (req: Request, res: Response) => res.sendFile(path.join(__dirname, '../client/index.html')))
+
 
 
 // CURRENTLY NOT WORKING
