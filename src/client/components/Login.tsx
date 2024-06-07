@@ -1,10 +1,28 @@
 import React, { useState } from 'react';
 
 interface LoginProps extends React.HTMLAttributes<HTMLElement> {
-    
+    email: string,
+    setEmail: React.Dispatch<React.SetStateAction<String>>,
+    password: string 
+    setPassword: React.Dispatch<React.SetStateAction<String>>,
 }
 
-const Login = () => {
+
+
+
+const Login: React.FC = (
+//     {
+//     email,
+//     setEmail,
+//     password,
+//     setPassword
+// }
+) => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+
     return (
         <div className='login-container'>
             <form className='login-form'>
@@ -12,13 +30,19 @@ const Login = () => {
                 <input 
                     className='email-input' 
                     type="text"
-                    value={''}
+                    onChange={(e)=> {
+                        setEmail(e.target.value);
+                    }}
+                    value={email}
                 />
                 <label>Password:</label>
                 <input 
                     type='password'
                     className='password-input'
-                    value={''}
+                    onChange={(e)=> {
+                        setPassword(e.target.value);
+                    }}
+                    value={password}
                 />
             </form>
         </div>

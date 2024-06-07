@@ -9,6 +9,7 @@ import Login from './components/Login';
 const App = () => {
 
 const [studentCandidate, setStudentCandidate] = useState('');
+
 const [students, setStudents] = useState<Students>([]);
 const [rules, setRules] = useState<Rules>({
     'must sit front': []
@@ -20,7 +21,12 @@ const [rules, setRules] = useState<Rules>({
   return (
       <div>
         <h1>SEATME</h1>
-        <Login />
+        <Login
+          // email={email}
+          // setEmail={setEmail}
+          // password={password}
+          // setPassword={setPassword}
+        />
         <StudentInput 
           studentCandidate={studentCandidate}
           setStudentCandidate={setStudentCandidate}
