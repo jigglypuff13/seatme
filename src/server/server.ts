@@ -2,13 +2,15 @@ import express, { Request, Response, NextFunction } from 'express';
 // const path = require('path');
 import path from 'path';
 import userController from './controllers/UserController';
+import cookieController from './controllers/CookieController';
 import bodyParser from 'body-parser';
 
 const app = express();
 
 app.use(bodyParser.json())
 
-app.post('/signup', userController.createUser, (req: Request, res: Response) =>{
+app.post('/signup', userController.createUser, cookieController.setSSIDCookie, (req: Request, res: Response) =>{
+  console.log("hello",res.locals.userID)
   res.status(200).json(true);
 })
 

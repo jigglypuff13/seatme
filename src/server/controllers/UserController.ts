@@ -3,40 +3,28 @@ import { Request, Response, NextFunction } from 'express';
 
 const userController : { [key: string]: (req: Request, res: Response, next:NextFunction )=> Promise<void> } = {};
 
+
+//Middleware for checking if user correctly inputted an email and password in the signin component; checking if email is already in use; and for signing up with a new email and password. 
 userController.createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { email, password } : { email: string; password: string}= req.body;
   if (!email || !password) {
     res.status(400).json({ error: 'Missing field.' });
   }
-    const queryText = `INSERT INTO users (usr_email, usr_password) VALUES ($1, $2)`;
-    const queryValues:string[] = [email, password];
-    const please = await seatME.query(queryText, queryValues, (err, result) => console.log(err, "end of error", result, "end of result"))
-    return next();
+  const emailQuery = 'SELECT * FROM users WHERE usr_email = $1'
+  const emailValue = [email]
+  await seatME.query(emailQuery, [email], (err, result) => {
+  if (result.rows.length === 0) {
+      const queryText = `INSERT INTO users (usr_email, usr_password) VALUES ($1, $2)`;
+      const queryValues:string[] = [email, password];
+      seatME.query(queryText, [email, password], (err, result) => result)
+      seatME.query('SELECT MAX(usr_id) FROM users', [], (err, result) => {
+        res.locals.userID = result.rows[0].max
+        return next();
+      })
+  } else {
+      res.status(400).json({ error: 'This email is already in use.'})
+    }
+})
 }
-    
-
-
-// userController.checkUser = async(uc:MiddlewareTypes) => {
-//     const { email } : { email: string} = uc.req.params;
-//     try {
-//       const client = await Pool.connect();
-//       const queryText = 'SELECT COUNT (*) FROM users WHERE email = $1'
-//       const queryValues = [email]
-//       const result = await client.query(queryText, queryValues)
-//       if (result === null) {
-//         uc.res.locals.userAvailability = true;
-//       } else {
-//         uc.res.locals.userAvailability = false;
-//       }
-//       uc.next();
-//     }
-//     catch(err) {
-//         uc.next({
-//           log: 'User Check Error',
-//           status: 400,
-//           message: { err: 'User Check Error' },
-//         });
-//     }
-//   };
 
 export default userController;

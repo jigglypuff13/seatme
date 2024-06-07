@@ -1,19 +1,11 @@
 
+import { Request, Response, NextFunction } from 'express';
 
-// const cookieController : { [key: string]: (cc:MiddlewareTypes)=> Promise<void> } = {};
+const cookieController : { [key: string]: (req: Request, res: Response, next:NextFunction )=> Promise<void> } = {};
 
-// cookieController.setSSIDCookie = async (cc:MiddlewareTypes): Promise<void> => {
-//     try {
-//         cc.res.cookie('ssid', cc.res.locals.userID, { httpOnly: true });
-//         cc.next();
-//     }
-//     catch(err) {
-//         cc.next({
-//             log: 'Error setting SSID cookie',
-//             status: 500,
-//             message: { err: 'Error setting SSID cookie'}
-//         })
-//     }
-// }
+cookieController.setSSIDCookie = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    res.cookie('ssid', res.locals.userID, { httpOnly: true });
+    return next();
+}
 
-// export default cookieController;
+export default cookieController;
