@@ -1,23 +1,26 @@
+import { Request, Response, NextFunction } from 'express';
+
+export type Middleware = (req: Request, res: Response, next: NextFunction) => Promise<void>;
 
 
 
 export type SeatProps = {
-    open: boolean,
-    studentName: string,
-    x: number,
-    y: number
+  open: boolean,
+  studentName: string,
+  x: number,
+  y: number
 }
 
 export type Student = {
-    id: number,
-    name: string
+  id: number,
+  name: string
 }
 
 // individual rule object = name of student
 // key number = primary key 
 // key: string = rule type
 export type Rules = {
-    [key:string]: string[]
+  [key: string]: string[]
 }
 
 /*
@@ -31,3 +34,5 @@ export type Rules = {
 export type Students = Student[]
 
 export type LoginOrSignupPath = '/signup' | '/login';
+
+
