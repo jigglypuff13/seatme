@@ -1,7 +1,7 @@
 import seatMe from '../database';
 import { Middleware } from '../../types';
 
-const ClassroomController: { [key: string]: Middleware } = {
+const classroomController: { [key: string]: Middleware } = {
 
   addNewClassroom: async (req, res, next) => {
 
@@ -13,6 +13,11 @@ const ClassroomController: { [key: string]: Middleware } = {
 
     console.log(name, '<-- name of new classroom');
 
+    const newClassroomQuery: string = `INSERT INTO charts (cht_name, cht_users_fk) VALUES (${name}, ${cookies.value})`
+    // seatMe.query(newClassroomQuery)
+
     next();
   }
 }
+
+export default classroomController;

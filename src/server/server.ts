@@ -4,6 +4,7 @@ import path from 'path';
 import userController from './controllers/UserController';
 import cookieController from './controllers/CookieController';
 import sessionController from './controllers/SessionController'
+import classroomController from './controllers/ClassroomController';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser'
 
@@ -12,16 +13,20 @@ const app = express();
 app.use(bodyParser.json())
 app.use(cookieParser())
 
-app.post('/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req: Request, res: Response) =>{
-  console.log("hello",res.locals.userID)
+app.post('/newClassroom', classroomController.addNewClassroom, (req: Request, res: Response) => {
   res.status(200).json(true);
 })
 
-app.post('/login', userController.loginUser, cookieController.setSSIDCookie, sessionController.startSession, (req: Request, res: Response) =>{
+app.post('/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req: Request, res: Response) => {
+  console.log("hello", res.locals.userID)
   res.status(200).json(true);
 })
 
-app.get('/logout', sessionController.logOut, (req: Request, res: Response)=>{
+app.post('/login', userController.loginUser, cookieController.setSSIDCookie, sessionController.startSession, (req: Request, res: Response) => {
+  res.status(200).json(true);
+})
+
+app.get('/logout', sessionController.logOut, (req: Request, res: Response) => {
   res.clearCookie('ssid');
   res.redirect('/')
 })
