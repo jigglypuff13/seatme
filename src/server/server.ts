@@ -1,13 +1,33 @@
 import express, { Request, Response, NextFunction } from 'express';
 // const path = require('path');
 import path from 'path';
-import connectDB from './database';
+import userController from './controllers/UserController';
+import cookieController from './controllers/CookieController';
+import sessionController from './controllers/SessionController'
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser'
 
 const app = express();
 
-connectDB();
+app.use(bodyParser.json())
+app.use(cookieParser())
+
+app.post('/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req: Request, res: Response) =>{
+  console.log("hello",res.locals.userID)
+  res.status(200).json(true);
+})
+
+app.post('/login', userController.loginUser, cookieController.setSSIDCookie, sessionController.startSession, (req: Request, res: Response) =>{
+  res.status(200).json(true);
+})
+
+app.get('/logout', sessionController.logOut, (req: Request, res: Response)=>{
+  res.clearCookie('ssid');
+  res.redirect('/')
+})
 
 app.use('/', (req: Request, res: Response) => res.sendFile(path.join(__dirname, '../client/index.html')))
+
 
 
 // CURRENTLY NOT WORKING
