@@ -1,9 +1,23 @@
+// {
+//     "compilerOptions": {
+//         "target": "ES6",
+//         "module": "NodeNext",
+//         "jsx": "react",
+//         "moduleResolution": "NodeNext",
+//         "noImplicitAny": true
+//     },
+//     "include": ["src/**/*"]
+//   }
+
+// updated below for jest:
 {
   "compilerOptions": {
     "target": "ES6",
-    "module": "NodeNext",
+    "module": "commonjs",
     "jsx": "react",
-    "moduleResolution": "NodeNext",
+    // "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "typeRoots": ["node_modules/@types"],
     "noImplicitAny": true,
   },
   "include": [

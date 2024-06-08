@@ -44,3 +44,5 @@ const [rules, setRules] = useState<Rules>({
       <App />
     </React.StrictMode>
   );
+
+  export default App;
