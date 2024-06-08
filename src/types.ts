@@ -1,3 +1,6 @@
+
+
+
 export type SeatProps = {
     open: boolean,
     studentName: string,
@@ -26,3 +29,5 @@ export type Rules = {
 */
 
 export type Students = Student[]
+
+export type LoginOrSignupPath = '/signup' | '/login';
