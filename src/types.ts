@@ -35,4 +35,7 @@ export type Students = Student[]
 
 export type LoginOrSignupPath = '/signup' | '/login';
 
-
+export type Classrooms = {
+  id: number,
+  name: string
+};
