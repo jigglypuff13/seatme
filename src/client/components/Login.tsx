@@ -13,7 +13,7 @@ const handleLoginOrSignup = (
     setEmail('');
     setPassword('');
 
-    /*
+
     fetch(path, {
         method: "POST",
         headers: {
@@ -35,7 +35,7 @@ const handleLoginOrSignup = (
     .catch(err => {
         console.log(err);
     })
-    */
+
 }
 
 

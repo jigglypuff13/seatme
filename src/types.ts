@@ -1,3 +1,6 @@
+
+
+
 export type SeatProps = {
     open: boolean,
     studentName: string,
