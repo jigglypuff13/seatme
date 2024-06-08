@@ -14,6 +14,10 @@ app.post('/signup', userController.createUser, cookieController.setSSIDCookie, (
   res.status(200).json(true);
 })
 
+app.post('/login', userController.loginUser, (req: Request, res: Response) =>{
+  res.status(200).json(true);
+})
+
 app.use('/', (req: Request, res: Response) => res.sendFile(path.join(__dirname, '../client/index.html')))
 
 

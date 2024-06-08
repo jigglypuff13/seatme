@@ -29,3 +29,5 @@ export type Rules = {
 */
 
 export type Students = Student[]
+
+export type LoginOrSignupPath = '/signup' | '/login';
