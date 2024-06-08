@@ -6,6 +6,7 @@ import {Students, Student, Rules} from '../../types'
 interface StudentInputProps extends React.HTMLAttributes<HTMLElement> {
     students: Students;
     rules: Rules;
+    setRules:React.Dispatch<React.SetStateAction<Rules>>;
     studentCandidate: string;
     setStudentCandidate: React.Dispatch<React.SetStateAction<String>>;
     setStudents:React.Dispatch<React.SetStateAction<Students>>;
@@ -21,21 +22,31 @@ const handleStudentCandidateChange = (
 }
 
 const handleDeleteStudent = (
-        e:React.MouseEvent<HTMLLIElement>,
+        // e:React.MouseEvent<HTMLLIElement>,
+        index:number,
+        rules:Rules,
+        setRules:React.Dispatch<React.SetStateAction<Rules>>,
         setStudents:React.Dispatch<React.SetStateAction<Students>>,
         students:Students
     ) => {
-    // console.log(e);
-    const studentName:string = e.currentTarget.textContent.replace('delete', '');
-    console.log('text content', studentName);
-    const newStudents = [...students]
-    for(let i = 0; i < newStudents.length; i++) {
-        if(newStudents[i].name === studentName) {
-            newStudents.splice(i, 1);
+    console.log('index', index);
+    // let studentName:string = e.currentTarget.textContent.replace('delete', '').replace('must sit at front of class', '');
+
+    // console.log('text content', studentName);
+    const newStudents = [...students];
+    const newRules = {...rules};
+const mustSitFront = newRules['must sit front'];
+
+    mustSitFront.splice(mustSitFront.indexOf(students[index].name), 1);
+    
+    // for(let i = 0; i < newStudents.length; i++) {
+    //     if(newStudents[i].name === studentName) {
+            newStudents.splice(index, 1);
             setStudents(newStudents);
-            break;
-        }
-    }
+            setRules(newRules);
+    //         break;
+    //     }
+    // }
 }
 
 
@@ -45,7 +56,8 @@ const StudentInput: React.FC<StudentInputProps> = ({
     setStudentCandidate,
     students, 
     setStudents,
-    rules
+    rules,
+    setRules
 }) => {
 
     // hard coded 
@@ -53,13 +65,41 @@ const StudentInput: React.FC<StudentInputProps> = ({
     const studentLIs = [];
 
     for(let i = 0; i < students.length; i++) {
+
+        // iterating over students
+        // create checkbox
+        // if rules array includes name
+        // value of checkbox is true
+        // else false
+
+        const checkbox = <input 
+            id={`${students[i].name}`} 
+            type="checkbox" 
+            value={`${rules['must sit front'].includes(students[i].name)}`}
+            checked={(rules['must sit front'].includes(students[i].name))}
+            onClick={(e) => {
+                console.log(e);
+                // const checkboxId = (e.target as HTMLInputElement).dataset.id;
+                const newRules = {...rules};
+                newRules['must sit front'].push(students[i].name);
+                setRules(newRules);
+            }}>
+            </input>
+        
+
+
         studentLIs.push(<li
                             className="student-li"
-                            onClick={(e) => {
-                                handleDeleteStudent(e, setStudents, students)
-                                }}>
+                            >
                         {students[i].name}
-                        <span className="delete-student-text">delete</span>
+                        {checkbox}<span>must sit at front of class</span>
+                        <button 
+                        onClick={(e) => {
+                            handleDeleteStudent(i, rules, setRules, setStudents, students)
+                            }}
+                        id={`${i}`} 
+                        className="delete-student-text">delete</button>
+                        
                         </li>)
     }
 
@@ -101,7 +141,7 @@ const StudentInput: React.FC<StudentInputProps> = ({
                 >Add Student</button>
             </form>
             <div className='student-list'>
-                <ul>
+                <ul id="student-list-ul">
                     {...studentLIs}
                 </ul>
             </div>

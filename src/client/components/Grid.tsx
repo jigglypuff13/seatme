@@ -21,23 +21,23 @@ const Grid = ({rules, students}: seatLayoutProps): JSX.Element => {
   const [grid, setGrid] = useState<JSX.Element[]>()
 
   const shallowStudents: Student[] = [...students];
-  const seatingGrid: string[] = new Array(students.length);
-
+  const seatingGrid: string[] = new Array(students.length).fill(null);
   // Simple randomizer algo
   const seatRandomizer = (seats: number): number => {
     const seat: number = (Math.floor(Math.random() * seats));
-    if (typeof seatingGrid[seat] !== 'string') return seat;
+    if (seatingGrid[seat] === null) return seat;
     else return seatRandomizer(seats);
   };
 
   const gridGenerator = (students: Students, rules: Rules): void => {
-    if (rules) {
+    if (rules['must sit front'].length !== 0) {
       // Iterate through rules object
       for (const rule in rules) {
+        
         // Check type of rule
         // If rule is sit at front, iterate through value array; assign each student to one of first five seats, then remove student from shallowStudents
-        if (rule === 'must sit at front') {
-          for (const student of rule) {
+        if (rule === 'must sit front') {
+          for (const student of rules[rule]) {
             const studentIndex: number = students.findIndex((studentObject: Student): boolean => studentObject.name === student)
             const seat: number = seatRandomizer(5);
             seatingGrid[seat] = student;
@@ -63,23 +63,23 @@ const Grid = ({rules, students}: seatLayoutProps): JSX.Element => {
   console.log('Grid => ', seatingGrid)
 };
 
-const saveGrid = async (students: Students, rules: Rules, grid: JSX.Element[]): Promise<void> => {
+// const saveGrid = async (students: Students, rules: Rules, grid: JSX.Element[]): Promise<void> => {
 
-  try {
-    const response = await fetch("/saveData", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify([students, rules, grid]),
-    });
+//   try {
+//     const response = await fetch("/saveData", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify([students, rules, grid]),
+//     });
 
-    const result = await response.json();
-    alert("Success!");
-  } catch (error) {
-    alert("Error saving information");
-  }
-}
+//     const result = await response.json();
+//     alert("Success!");
+//   } catch (error) {
+//     alert("Error saving information");
+//   }
+// }
 
   return (
     <div>
@@ -93,7 +93,7 @@ const saveGrid = async (students: Students, rules: Rules, grid: JSX.Element[]): 
       }
       <div className="centerElement">
       <button onClick={() => gridGenerator(students, rules)}>Click to Generate Layout</button>
-      <button onClick={() => saveGrid(students, rules, grid)}>Button to save in SQL</button>
+      {/* <button onClick={() => saveGrid(students, rules, grid)}>Button to save in SQL</button> */}
       </div>
     </div>
   )

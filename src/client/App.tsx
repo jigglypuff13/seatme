@@ -27,6 +27,7 @@ const [rules, setRules] = useState<Rules>({
             students={students} 
             setStudents={setStudents}
             rules={rules}
+            setRules={setRules}
             />
           <Grid 
             rules={rules}

@@ -24,7 +24,7 @@ h1 {
     transform: translate(-50%, -50%);  */
     opacity: 0; 
     /* transition: opacity 0.3s ease;  */
-    pointer-events: none;
+    /* pointer-events: none; */
     margin-left: 1rem;
 }
 
