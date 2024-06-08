@@ -8,8 +8,14 @@ const userController : { [key: string]: (req: Request, res: Response, next:NextF
 userController.createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { email, password } : { email: string; password: string}= req.body;
   //Conditional to check that user filled email and password text boxes
-  if (!email || !password) {
-    res.status(400).json({ error: 'Missing field.' });
+  // if (!email || !password) {
+  //   res.status(400).json({ error: 'Missing field.' });
+  // }
+    // Validate email format
+  const emailRegex = /\S+@\S+\.\S+/;
+  if (!emailRegex.test(email)) {
+    res.status(400).json({ error: 'Invalid email format' });
+    return; 
   }
   const emailQuery = 'SELECT * FROM users WHERE usr_email = $1'
   const salt = await bcrypt.genSalt(10)
