@@ -1,5 +1,5 @@
 import seatMe from '../database';
-import { Middleware } from '../../types';
+import { Middleware, Students, Rules } from '../../types';
 
 const chartController: { [key: string]: Middleware } = {
 
@@ -7,9 +7,11 @@ const chartController: { [key: string]: Middleware } = {
 
     const userID: number = req.cookies.ssid;
 
-    console.log(req.cookies, '<--- req.cookies');
     console.log(userID, '<-- cookies');
 
+    const students: Students = req.body[0];
+    const rules: Rules = req.body[1];
+    const grid: JSX.Element[] = req.body[2];
     const chartName: string = req.body[3];
 
     console.log(chartName, '<-- name of new classroom');
@@ -21,10 +23,13 @@ const chartController: { [key: string]: Middleware } = {
     // insert new chart name
     try {
       seatMe.query(newClassroomQuery, newClassroomValues, (err, result) => {
-        console.log(result, '<---result');
-        console.log(result.rows, '<---result.rows');
-        // chartID = result.cht_id
-        res.locals.body = { userID, chartID }
+        console.log(result.rows, '<---result.rows'); // [ { cht_name: 'maths', cht_users_fk: 33, cht_id: 4 } ]
+        chartID = result.rows[2]; // should be cht_id
+
+        console.log(chartID, '<--- cht_id)')
+        console.log(userID, '<--- usr_id)')
+
+        res.locals.chartInfo = { students, rules, grid, userID, chartID }
         next();
       })
 
