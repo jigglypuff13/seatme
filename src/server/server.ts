@@ -4,7 +4,7 @@ import path from 'path';
 import userController from './controllers/UserController';
 import cookieController from './controllers/CookieController';
 import sessionController from './controllers/SessionController'
-import classroomController from './controllers/ClassroomController';
+import chartController from './controllers/ChartController';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser'
 
@@ -13,7 +13,7 @@ const app = express();
 app.use(bodyParser.json())
 app.use(cookieParser())
 
-app.post('/newClassroom', classroomController.addNewClassroom, (req: Request, res: Response) => {
+app.post('/newChart', chartController.addNewChart, (req: Request, res: Response) => {
   res.status(200).json(true);
 })
 

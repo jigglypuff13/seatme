@@ -19,6 +19,7 @@ interface seatLayoutProps {
 
 const Grid = ({rules, students}: seatLayoutProps): JSX.Element => {
   const [grid, setGrid] = useState<JSX.Element[]>()
+  const [chartName, setChartName] = useState<string>('');
 
   const shallowStudents: Student[] = [...students];
   const seatingGrid: string[] = new Array(students.length).fill(null);
@@ -63,26 +64,29 @@ const Grid = ({rules, students}: seatLayoutProps): JSX.Element => {
   console.log('Grid => ', seatingGrid)
 };
 
-// const saveGrid = async (students: Students, rules: Rules, grid: JSX.Element[]): Promise<void> => {
+const saveGrid = async (students: Students, rules: Rules, grid: JSX.Element[], chartName:string): Promise<void> => {
 
-//   try {
-//     const response = await fetch("/saveData", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify([students, rules, grid]),
-//     });
+  try {
+    const response = await fetch("/newChart", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify([students, rules, grid, chartName]),
+    });
 
-//     const result = await response.json();
-//     alert("Success!");
-//   } catch (error) {
-//     alert("Error saving information");
-//   }
-// }
+    const result = await response.json();
+    alert("Success!");
+  } catch (error) {
+    alert("Error saving information");
+  }
+}
 
   return (
     <div>
+      <input type="text" value={chartName} onChange={(e) => {
+        setChartName(e.target.value);
+      }} />
       { grid
         ? <div id="GridLayout"> 
           {grid} 
@@ -93,7 +97,7 @@ const Grid = ({rules, students}: seatLayoutProps): JSX.Element => {
       }
       <div className="centerElement">
       <button onClick={() => gridGenerator(students, rules)}>Click to Generate Layout</button>
-      {/* <button onClick={() => saveGrid(students, rules, grid)}>Button to save in SQL</button> */}
+      <button onClick={() => saveGrid(students, rules, grid, chartName)}>Save Layout</button>
       </div>
     </div>
   )
