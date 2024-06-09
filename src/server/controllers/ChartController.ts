@@ -5,8 +5,9 @@ const chartController: { [key: string]: Middleware } = {
 
   addNewChart: async (req, res, next) => {
 
-    const userID: number = req.cookies.value;
+    const userID: number = req.cookies.ssid;
 
+    console.log(req.cookies, '<--- req.cookies');
     console.log(userID, '<-- cookies');
 
     const chartName: string = req.body[3];
@@ -21,6 +22,7 @@ const chartController: { [key: string]: Middleware } = {
     try {
       seatMe.query(newClassroomQuery, newClassroomValues, (err, result) => {
         console.log(result, '<---result');
+        console.log(result.rows, '<---result.rows');
         // chartID = result.cht_id
         res.locals.body = { userID, chartID }
         next();
