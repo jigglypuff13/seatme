@@ -8,12 +8,19 @@ import chartController from './controllers/ChartController';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser'
 
+import seatMe from './database';
+import studentController from './controllers/StudentController';
+
 const app = express();
 
 app.use(bodyParser.json())
 app.use(cookieParser())
 
-app.post('/newChart', chartController.addNewChart, (req: Request, res: Response) => {
+console.log('hello')
+seatMe.testConnection();
+
+app.post('/newChart', chartController.addNewChart, studentController.addStudents, (req: Request, res: Response) => {
+  console.log('/newChart endpoint finished');
   res.status(200).json(true);
 })
 
@@ -57,4 +64,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   }
 })
 
-app.listen(3000, () => console.log('server is listening on port 3000'));
+app.listen(3000, () => {
+  console.log('server is listening on port 3000')
+  seatMe.testConnection();
+
+});
