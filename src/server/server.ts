@@ -19,7 +19,7 @@ app.use(cookieParser())
 console.log('hello')
 seatMe.testConnection();
 
-app.post('/newChart', chartController.addNewChart, studentController.addStudents, (req: Request, res: Response) => {
+app.post('/newChart', chartController.addNewChart, studentController.addStudents, chartController.addNewChartsStudents, (req: Request, res: Response) => {
   console.log('/newChart endpoint finished');
   res.status(200).json(true);
 })
