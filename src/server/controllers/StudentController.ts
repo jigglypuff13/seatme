@@ -10,6 +10,7 @@ const studentController: { [key: string]: Middleware } = {
     console.log(userID, '<--- userID in StudentController');
     console.log(students, '<--- students in StudentController')
 
+    // create query and value string depending on the length of Students
     const createStudentsQuery = (students: Students) => {
 
       let query = 'INSERT INTO students (stu_name, stu_users_fk) VALUES ';
@@ -29,22 +30,32 @@ const studentController: { [key: string]: Middleware } = {
 
     try {
 
-      await seatMe.query(query, valuesArr, (err, result) => {
-        console.log('INSIDE studentName query');
+      const insertedStudentIDs = await seatMe.query2(query, valuesArr);
 
-        const insertedStudents = result.rows;
+      console.log(insertedStudentIDs, '<--- insertedStudentIDs')
 
-        console.log(insertedStudents, '<--- insertedStudents');
+      const studentIDs = insertedStudentIDs.rows;
 
-        res.locals.chartInfo = { ...res.locals.chartInfo, insertedStudents };
+      res.locals.chartInfo = { ...res.locals.chartInfo, studentIDs };
 
-        console.log(result, '<--- result from inside queryResult');
-        if (err) {
-          console.log(err, '<--- err in studentController')
+      return next();
 
-          return next();
-        }
-      })
+      // await seatMe.query(query, valuesArr, (err, result) => {
+      //   console.log('INSIDE studentName query');
+      //
+      //   const insertedStudents = result.rows;
+      //
+      //   console.log(insertedStudents, '<--- insertedStudents');
+      //
+      //   res.locals.chartInfo = { ...res.locals.chartInfo, insertedStudents };
+      //
+      //   console.log(result, '<--- result from inside queryResult');
+      //   if (err) {
+      //     console.log(err, '<--- err in studentController')
+      //
+      //     return next();
+      //   }
+      // })
 
       // return next();
 

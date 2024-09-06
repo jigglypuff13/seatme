@@ -21,6 +21,19 @@ const testConnection = async () => {
 
 testConnection();
 
+// export default {
+//   query: (
+//     text: string,
+//     params: (string | number)[],
+//     callback: (err: Error, result: QueryResult<any>) => void) => {
+//     return pool.query(text, params, callback);
+//   },
+//   end: () => pool.end(),
+//   testConnection
+// };
+
+
+/** Async/Await Version **/
 export default {
   query: (
     text: string,
@@ -28,41 +41,35 @@ export default {
     callback: (err: Error, result: QueryResult<any>) => void) => {
     return pool.query(text, params, callback);
   },
+  query2: async (text: string, params: (string | number)[]) => {
+    try {
+      const result = await pool.query(text, params);
+      return result;
+    } catch (err) {
+      console.error('Error executing query', err.stack);
+      throw err;
+    }
+  },
   end: () => pool.end(),
   testConnection
-
-  /** Async/Await Version **/
-  // export default {
-  //   query: async (text: string, params: (string | number)[]) => {
-  //     try {
-  //       const result = await pool.query(text, params);
-  //       return result;
-  //     } catch (err) {
-  //       console.error('Error executing query', err.stack);
-  //       throw err;
-  //     }
-  //   },
-  //   end: () => pool.end(),
-  //   testConnection
-  // };
-
-
-  /** testing different variation of above, may break some stuff **/
-  // query: (text: string, params: (string | number)[]): Promise<QueryResult<any>> => {
-  //   return new Promise((resolve, reject) => {
-  //     pool.query(text, params, (err, result) => {
-  //       if (err) {
-  //         return reject(err); // Reject the promise with the error
-  //       }
-  //       resolve(result); // Resolve the promise with the result
-  //     });
-  //   });
-  // },
-  // end: () => pool.end(),
-  // testConnection
-  //
-  /** testing ends **/
 };
+
+
+/** testing different variation of above, may break some stuff **/
+// query: (text: string, params: (string | number)[]): Promise<QueryResult<any>> => {
+//   return new Promise((resolve, reject) => {
+//     pool.query(text, params, (err, result) => {
+//       if (err) {
+//         return reject(err); // Reject the promise with the error
+//       }
+//       resolve(result); // Resolve the promise with the result
+//     });
+//   });
+// },
+// end: () => pool.end(),
+// testConnection
+//
+/** testing ends **/
 // var pg = require('pg');
 //or native libpq bindings
 //var pg = require('pg').native

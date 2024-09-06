@@ -57,11 +57,14 @@ app.use('/', (req: Request, res: Response) => res.sendFile(path.join(__dirname, 
 
 /* Global Middlware Error Handling*/
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.log('inside global error handler');
   const defaultErr = {
     log: 'Unknown middlware error',
     status: 500,
     message: 'Error happened while in a middleware'
   }
+
+  res.status(500).json({ message: err.message });
 })
 
 app.listen(3000, () => {
