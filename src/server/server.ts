@@ -4,24 +4,36 @@ import path from 'path';
 import userController from './controllers/UserController';
 import cookieController from './controllers/CookieController';
 import sessionController from './controllers/SessionController'
+import chartController from './controllers/ChartController';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser'
+
+import seatMe from './database';
+import studentController from './controllers/StudentController';
 
 const app = express();
 
 app.use(bodyParser.json())
 app.use(cookieParser())
 
-app.post('/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req: Request, res: Response) =>{
-  console.log("hello",res.locals.userID)
+console.log('hello')
+seatMe.testConnection();
+
+app.post('/newChart', chartController.addNewChart, studentController.addStudents, chartController.addNewChartsStudents, (req: Request, res: Response) => {
+  console.log('/newChart endpoint finished');
   res.status(200).json(true);
 })
 
-app.post('/login', userController.loginUser, cookieController.setSSIDCookie, sessionController.startSession, (req: Request, res: Response) =>{
+app.post('/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession, (req: Request, res: Response) => {
+  console.log("hello", res.locals.userID)
   res.status(200).json(true);
 })
 
-app.get('/logout', sessionController.logOut, (req: Request, res: Response)=>{
+app.post('/login', userController.loginUser, cookieController.setSSIDCookie, sessionController.startSession, (req: Request, res: Response) => {
+  res.status(200).json(true);
+})
+
+app.get('/logout', sessionController.logOut, (req: Request, res: Response) => {
   res.clearCookie('ssid');
   res.redirect('/')
 })
@@ -45,9 +57,18 @@ app.use('/', (req: Request, res: Response) => res.sendFile(path.join(__dirname, 
 
 /* Global Middlware Error Handling*/
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.log('inside global error handler');
   const defaultErr = {
-    log: 'Unknown middlware error'
+    log: 'Unknown middlware error',
+    status: 500,
+    message: 'Error happened while in a middleware'
   }
+
+  res.status(500).json({ message: err.message });
 })
 
-app.listen(3000, () => console.log('server is listening on port 3000'));
+app.listen(3000, () => {
+  console.log('server is listening on port 3000')
+  seatMe.testConnection();
+
+});
